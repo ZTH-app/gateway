@@ -1,0 +1,48 @@
+http:
+  port: 80
+apiEndpoints:
+  api-user:
+    host: 'localhost'
+    paths: '/user/*'
+  api-chapter:
+    host: 'localhost'
+    paths: '/chapter/*'
+  api-course:
+    host: 'localhost'
+    paths: '/course/*'
+serviceEndpoints:
+  url-users:
+    url: 'http://127.0.0.1:3000/'
+  url-courses:
+    url: 'http://127.0.0.1:3001/'
+  url-chapters:
+    url: 'http://127.0.0.1:3002/'
+policies:
+  - cors
+  - proxy
+pipelines:
+  users:
+    apiEndpoints:
+      - api-user
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: url-users
+              changeOrigin: true
+  courses:
+    apiEndpoints:
+      - api-course
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: url-courses
+              changeOrigin: true
+  chapters:
+    apiEndpoints:
+      - api-chapter
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: url-chapters
+              changeOrigin: true
+
