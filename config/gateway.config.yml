@@ -1,28 +1,29 @@
 http:
   port: 80
+  hostname: 'localhost'
 apiEndpoints:
   api-user:
     host: 'localhost'
-    paths: '/user/*'
+    paths: [ '/user', /user/*']
   api-chapter:
     host: 'localhost'
-    paths: '/chapter/*'
+    paths: ['/chapter/', /chapter/*']
   api-course:
     host: 'localhost'
-    paths: '/course/*'
+    paths: ['/course/', '/course/*']
 serviceEndpoints:
   url-users:
-    url: 'http://127.0.0.1:3000/'
+    url: 'http://localhost:3000'
   url-courses:
-    url: 'http://127.0.0.1:3001/'
+    url: 'http://localhost:3001'
   url-chapters:
-    url: 'http://127.0.0.1:3002/'
+    url: 'http://localhost:3002'
 policies:
   - cors
   - proxy
 pipelines:
   users:
-    apiEndpoints:
+    apiEndpoints: 
       - api-user
     policies:
       - proxy:
@@ -30,7 +31,7 @@ pipelines:
               serviceEndpoint: url-users
               changeOrigin: true
   courses:
-    apiEndpoints:
+    apiEndpoints: 
       - api-course
     policies:
       - proxy:
@@ -38,7 +39,7 @@ pipelines:
               serviceEndpoint: url-courses
               changeOrigin: true
   chapters:
-    apiEndpoints:
+    apiEndpoints: 
       - api-chapter
     policies:
       - proxy:
